@@ -1,0 +1,272 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use App\Models\ProductCategory;
+use App\Models\Product;
+
+class ProductSeeder extends Seeder
+{
+    public function run(): void
+    {
+        $categories = [
+            ['name' => '数码电子', 'slug' => 'digital', 'sort' => 100, 'status' => 1],
+            ['name' => '服装鞋包', 'slug' => 'fashion', 'sort' => 90, 'status' => 1],
+            ['name' => '美食饮品', 'slug' => 'food', 'sort' => 80, 'status' => 1],
+            ['name' => '美妆护肤', 'slug' => 'beauty', 'sort' => 70, 'status' => 1],
+            ['name' => '家居生活', 'slug' => 'home', 'sort' => 60, 'status' => 1],
+            ['name' => '运动户外', 'slug' => 'sports', 'sort' => 50, 'status' => 1],
+        ];
+
+        $categoryIds = [];
+        foreach ($categories as $cat) {
+            $category = ProductCategory::create($cat);
+            $categoryIds[$cat['name']] = $category->id;
+        }
+
+        $products = [
+            [
+                'name' => 'iPhone 15 Pro Max 256GB',
+                'slug' => 'iphone-15-pro-max-256gb',
+                'category_id' => $categoryIds['数码电子'],
+                'description' => '苹果旗舰手机，A17 Pro芯片，钛金属设计，强大影像系统，支持ProMotion自适应刷新率。',
+                'price' => 8999.00,
+                'original_price' => 9999.00,
+                'cover' => 'https://picsum.photos/seed/iphone15/400/400',
+                'images' => json_encode([
+                    'https://picsum.photos/seed/iphone15/800/800',
+                    'https://picsum.photos/seed/iphone15b/800/800',
+                    'https://picsum.photos/seed/iphone15c/800/800',
+                ]),
+                'stock' => 50,
+                'sales' => 128,
+                'is_hot' => 1,
+                'is_new' => 1,
+                'is_featured' => 1,
+                'status' => 1,
+                'sort' => 100,
+            ],
+            [
+                'name' => 'MacBook Pro 14寸 M3 Pro',
+                'slug' => 'macbook-pro-14-m3-pro',
+                'category_id' => $categoryIds['数码电子'],
+                'description' => '搭载M3 Pro芯片，18小时电池续航，Liquid Retina XDR显示屏，专业级性能。',
+                'price' => 16999.00,
+                'original_price' => 18999.00,
+                'cover' => 'https://picsum.photos/seed/macbook/400/400',
+                'images' => json_encode([
+                    'https://picsum.photos/seed/macbook/800/800',
+                    'https://picsum.photos/seed/macbookb/800/800',
+                ]),
+                'stock' => 30,
+                'sales' => 86,
+                'is_hot' => 1,
+                'is_new' => 1,
+                'is_featured' => 1,
+                'status' => 1,
+                'sort' => 99,
+            ],
+            [
+                'name' => 'AirPods Pro 第二代',
+                'slug' => 'airpods-pro-2nd',
+                'category_id' => $categoryIds['数码电子'],
+                'description' => '主动降噪，自适应音频，个性化空间音频，MagSafe充电盒。',
+                'price' => 1799.00,
+                'original_price' => 1999.00,
+                'cover' => 'https://picsum.photos/seed/airpods/400/400',
+                'images' => json_encode([
+                    'https://picsum.photos/seed/airpods/800/800',
+                    'https://picsum.photos/seed/airpodsb/800/800',
+                ]),
+                'stock' => 100,
+                'sales' => 256,
+                'is_hot' => 1,
+                'is_new' => 0,
+                'is_featured' => 1,
+                'status' => 1,
+                'sort' => 98,
+            ],
+            [
+                'name' => 'Nike Air Max 270 男子运动鞋',
+                'slug' => 'nike-air-max-270',
+                'category_id' => $categoryIds['服装鞋包'],
+                'description' => '270度可视Air Max气垫，柔软舒适缓震，透气网面设计，适合日常运动。',
+                'price' => 849.00,
+                'original_price' => 1099.00,
+                'cover' => 'https://picsum.photos/seed/nike270/400/400',
+                'images' => json_encode([
+                    'https://picsum.photos/seed/nike270/800/800',
+                    'https://picsum.photos/seed/nike270b/800/800',
+                ]),
+                'stock' => 80,
+                'sales' => 324,
+                'is_hot' => 1,
+                'is_new' => 1,
+                'is_featured' => 0,
+                'status' => 1,
+                'sort' => 95,
+            ],
+            [
+                'name' => '南极人纯棉休闲T恤',
+                'slug' => 'nanjiren-cotton-tshirt',
+                'category_id' => $categoryIds['服装鞋包'],
+                'description' => '100%纯棉面料，柔软透气，简约款式，多色可选，适合日常穿着。',
+                'price' => 69.00,
+                'original_price' => 129.00,
+                'cover' => 'https://picsum.photos/seed/tshirt/400/400',
+                'images' => json_encode([
+                    'https://picsum.photos/seed/tshirt/800/800',
+                ]),
+                'stock' => 200,
+                'sales' => 567,
+                'is_hot' => 1,
+                'is_new' => 0,
+                'is_featured' => 0,
+                'status' => 1,
+                'sort' => 80,
+            ],
+            [
+                'name' => '小米手环8 Pro',
+                'slug' => 'xiaomi-band-8-pro',
+                'category_id' => $categoryIds['数码电子'],
+                'description' => '1.74寸AMOLED大屏，150+运动模式，GPS独立定位，14天超长续航。',
+                'price' => 399.00,
+                'original_price' => 499.00,
+                'cover' => 'https://picsum.photos/seed/miband/400/400',
+                'images' => json_encode([
+                    'https://picsum.photos/seed/miband/800/800',
+                    'https://picsum.photos/seed/mibandb/800/800',
+                ]),
+                'stock' => 120,
+                'sales' => 189,
+                'is_hot' => 0,
+                'is_new' => 1,
+                'is_featured' => 1,
+                'status' => 1,
+                'sort' => 90,
+            ],
+            [
+                'name' => '三只松鼠坚果礼盒',
+                'slug' => 'three-squirrel-nuts-giftbox',
+                'category_id' => $categoryIds['美食饮品'],
+                'description' => '精选全球好坚果，礼盒包装精美，适合送礼，年货必备。',
+                'price' => 128.00,
+                'original_price' => 168.00,
+                'cover' => 'https://picsum.photos/seed/nuts/400/400',
+                'images' => json_encode([
+                    'https://picsum.photos/seed/nuts/800/800',
+                ]),
+                'stock' => 150,
+                'sales' => 432,
+                'is_hot' => 1,
+                'is_new' => 0,
+                'is_featured' => 1,
+                'status' => 1,
+                'sort' => 85,
+            ],
+            [
+                'name' => '兰蔻小黑瓶精华肌底液',
+                'slug' => 'lancome-advanced-genifique',
+                'category_id' => $categoryIds['美妆护肤'],
+                'description' => '蕴含10.7%高浓度二裂酵母精粹，修护肌肤屏障，改善细纹暗沉。',
+                'price' => 899.00,
+                'original_price' => 1080.00,
+                'cover' => 'https://picsum.photos/seed/lancome/400/400',
+                'images' => json_encode([
+                    'https://picsum.photos/seed/lancome/800/800',
+                    'https://picsum.photos/seed/lancomeb/800/800',
+                ]),
+                'stock' => 60,
+                'sales' => 276,
+                'is_hot' => 1,
+                'is_new' => 0,
+                'is_featured' => 1,
+                'status' => 1,
+                'sort' => 88,
+            ],
+            [
+                'name' => '飞利浦电动牙刷HX9911',
+                'slug' => 'philips-sonicare-hx9911',
+                'category_id' => $categoryIds['家居生活'],
+                'description' => '智能磁悬浮马达，4种洁齿模式，APP个性化指导，30天超长续航。',
+                'price' => 599.00,
+                'original_price' => 799.00,
+                'cover' => 'https://picsum.photos/seed/philips/400/400',
+                'images' => json_encode([
+                    'https://picsum.photos/seed/philips/800/800',
+                ]),
+                'stock' => 75,
+                'sales' => 198,
+                'is_hot' => 0,
+                'is_new' => 1,
+                'is_featured' => 0,
+                'status' => 1,
+                'sort' => 75,
+            ],
+            [
+                'name' => '迪卡侬瑜伽垫加厚防滑',
+                'slug' => 'decathlon-yoga-mat',
+                'category_id' => $categoryIds['运动户外'],
+                'description' => '8mm加厚设计，双面防滑纹理，环保无异味，送绑带。',
+                'price' => 89.00,
+                'original_price' => 129.00,
+                'cover' => 'https://picsum.photos/seed/yogamat/400/400',
+                'images' => json_encode([
+                    'https://picsum.photos/seed/yogamat/800/800',
+                ]),
+                'stock' => 180,
+                'sales' => 345,
+                'is_hot' => 1,
+                'is_new' => 0,
+                'is_featured' => 0,
+                'status' => 1,
+                'sort' => 70,
+            ],
+            [
+                'name' => '戴森吹风机HD15',
+                'slug' => 'dyson-supersonic-hd15',
+                'category_id' => $categoryIds['美妆护肤'],
+                'description' => '智能温控，快速干发，减少热损伤，磁吸风嘴，奢华质感。',
+                'price' => 2699.00,
+                'original_price' => 2999.00,
+                'cover' => 'https://picsum.photos/seed/dyson/400/400',
+                'images' => json_encode([
+                    'https://picsum.photos/seed/dyson/800/800',
+                    'https://picsum.photos/seed/dysonb/800/800',
+                ]),
+                'stock' => 25,
+                'sales' => 89,
+                'is_hot' => 1,
+                'is_new' => 1,
+                'is_featured' => 1,
+                'status' => 1,
+                'sort' => 92,
+            ],
+            [
+                'name' => '索尼WH-1000XM5降噪耳机',
+                'slug' => 'sony-wh-1000xm5',
+                'category_id' => $categoryIds['数码电子'],
+                'description' => '业界领先降噪，30小时续航，LDAC高解析音频，佩戴舒适。',
+                'price' => 2199.00,
+                'original_price' => 2699.00,
+                'cover' => 'https://picsum.photos/seed/sonyxm5/400/400',
+                'images' => json_encode([
+                    'https://picsum.photos/seed/sonyxm5/800/800',
+                    'https://picsum.photos/seed/sonyxm5b/800/800',
+                ]),
+                'stock' => 40,
+                'sales' => 156,
+                'is_hot' => 1,
+                'is_new' => 0,
+                'is_featured' => 1,
+                'status' => 1,
+                'sort' => 96,
+            ],
+        ];
+
+        foreach ($products as $product) {
+            Product::create($product);
+        }
+    }
+}

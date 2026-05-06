@@ -1,0 +1,17 @@
+node_modules/
+vendor/
+.env
+.env.*
+.env.backup
+dist/
+dist.zip
+src.zip
+*.log
+storage/logs/
+storage/framework/
+bootstrap/cache/
+public/storage
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
