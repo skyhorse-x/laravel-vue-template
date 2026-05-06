@@ -13,7 +13,7 @@ const loading = ref(true)
 
 onMounted(async () => {
   try {
-    const res = await api.dashboard()
+    const res = await api.admin.dashboard()
     if (res.code === 200) {
       stats.value = res.data
     }

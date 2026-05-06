@@ -148,10 +148,9 @@ function search() { page.value = 1; loadArticles() }
     </div>
 
     <ElDialog
-      :visible="dialogVisible"
+      v-model="dialogVisible"
       :title="editForm.id ? '编辑文章' : '新增文章'"
       width="680px"
-      @close="dialogVisible = false"
     >
       <ElForm :model="editForm" label-width="70px">
         <ElFormItem label="标题">

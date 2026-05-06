@@ -106,10 +106,9 @@ async function deleteAdmin(id) {
     </div>
 
     <ElDialog
-      :visible="dialogVisible"
-      :title="editForm.id ? '编辑管理员' : '新增管理员'"
+      v-model="dialogVisible"
+      :title="editForm.value.id ? '编辑管理员' : '新增管理员'"
       width="480px"
-      @close="dialogVisible = false"
     >
       <ElForm :model="editForm" label-width="80px">
         <ElFormItem label="用户名">

@@ -101,10 +101,9 @@ function getGroupedPermissions() {
     </div>
 
     <ElDialog
-      :visible="dialogVisible"
+      v-model="dialogVisible"
       :title="editForm.id ? '编辑角色' : '新增角色'"
-      width="560px"
-      @close="dialogVisible = false"
+      width="500px"
     >
       <ElForm :model="editForm" label-width="80px">
         <ElFormItem label="名称">

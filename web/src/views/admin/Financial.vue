@@ -148,10 +148,9 @@ async function saveRecord() {
     </div>
 
     <ElDialog
-      :visible="dialogVisible"
+      v-model="dialogVisible"
       :title="editForm.id ? '编辑财务记录' : '新增财务记录'"
       width="480px"
-      @close="dialogVisible = false"
     >
       <ElForm :model="editForm" label-width="80px">
         <ElFormItem label="用户">
