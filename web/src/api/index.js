@@ -133,6 +133,9 @@ export default {
       create(data) {
         return instance.post('/admin/notifications', data)
       },
+      update(id, data) {
+        return instance.put(`/admin/notifications/${id}`, data)
+      },
       delete(id) {
         return instance.delete(`/admin/notifications/${id}`)
       },
@@ -163,6 +166,9 @@ export default {
       },
       create(data) {
         return instance.post('/admin/ip-blacklist', data)
+      },
+      update(id, data) {
+        return instance.put(`/admin/ip-blacklist/${id}`, data)
       },
       delete(id) {
         return instance.delete(`/admin/ip-blacklist/${id}`)
@@ -344,6 +350,9 @@ export default {
     },
     create(data) {
       return instance.post('/admin/financial', data)
+    },
+    update(id, data) {
+      return instance.put(`/admin/financial/${id}`, data)
     },
     statistics(params) {
       return instance.get('/admin/financial/statistics', { params })

@@ -53,8 +53,11 @@ function toggleSidebar() {
 
 function toggleExpand(id) {
   const idx = expandedKeys.value.indexOf(id)
-  if (idx >= 0) expandedKeys.value.splice(idx, 1)
-  else expandedKeys.value.push(id)
+  if (idx >= 0) {
+    expandedKeys.value.splice(idx, 1)
+  } else {
+    expandedKeys.value = [id]
+  }
 }
 
 function isExpanded(id) {
@@ -92,6 +95,7 @@ const iconMap = {
   Article: 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z',
   Setting: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.573-1.066z M15 12a3 3 0 11-6 0 3 3 0 016 0z',
   Financial: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+  Api: 'M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z',
 }
 
 function getIconPath(icon) {
@@ -405,8 +409,7 @@ function formatNotifyTime(date) {
 }
 
 .content-wrapper {
-  width: 100%;
-  max-width: 1400px;
+  width: auto;
   margin: 0 auto;
   padding: 24px;
 }

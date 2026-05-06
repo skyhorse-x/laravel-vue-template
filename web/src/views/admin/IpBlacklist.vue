@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import api from '@/api'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage, ElMessageBox, ElSelect, ElOption as ElSelectOption } from 'element-plus'
 
 const records = ref([])
 const total = ref(0)
@@ -42,8 +42,20 @@ function resetSearch() {
 }
 
 function openAddDialog() {
-  editForm.value = { ip: '', type: 'block', reason: '', expired_days: '' }
+  editForm.value = { id: '', ip: '', type: 'block', reason: '', expired_days: '' }
   isEdit.value = false
+  dialogVisible.value = true
+}
+
+function openEditDialog(record) {
+  editForm.value = {
+    id: record.id,
+    ip: record.ip,
+    type: record.type,
+    reason: record.reason || '',
+    expired_days: record.expired_days || ''
+  }
+  isEdit.value = true
   dialogVisible.value = true
 }
 
@@ -52,14 +64,20 @@ async function saveRecord() {
     ElMessage.warning('请输入IP地址')
     return
   }
-  const res = await api.admin.ipBlacklist.create({
+  const data = {
     ip: editForm.value.ip,
     type: editForm.value.type,
     reason: editForm.value.reason,
     expired_days: editForm.value.expired_days || null
-  })
+  }
+  let res
+  if (isEdit.value) {
+    res = await api.admin.ipBlacklist.update(editForm.value.id, data)
+  } else {
+    res = await api.admin.ipBlacklist.create(data)
+  }
   if (res.code === 200) {
-    ElMessage.success('添加成功')
+    ElMessage.success(isEdit.value ? '更新成功' : '添加成功')
     dialogVisible.value = false
     loadData()
   } else {
@@ -192,8 +210,16 @@ function getTypeTagClass(type) {
             {{ formatDate(scope.row.created_at) }}
           </template>
         </ElTableColumn>
-        <ElTableColumn label="操作" width="80" fixed="right">
+        <ElTableColumn label="操作" width="120" fixed="right">
           <template #default="scope">
+            <ElButton
+              link
+              type="primary"
+              size="small"
+              @click="openEditDialog(scope.row)"
+            >
+              编辑
+            </ElButton>
             <ElButton
               link
               type="danger"

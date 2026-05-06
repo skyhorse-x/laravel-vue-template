@@ -9,7 +9,8 @@ const page = ref(1)
 const perPage = 10
 const statistics = ref({ income: 0, expense: 0, profit: 0 })
 const dialogVisible = ref(false)
-const editForm = ref({ user_id: '', type: 'income', amount: '', title: '', description: '', status: 1 })
+const editForm = ref({ id: '', user_id: '', type: 'income', amount: '', title: '', description: '', status: 1 })
+const isEdit = ref(false)
 const users = ref([])
 
 onMounted(async () => { await loadRecords(); await loadStatistics(); await loadUsers() })
@@ -32,13 +33,33 @@ async function loadUsers() {
 function handlePageChange(val) { page.value = val; loadRecords() }
 
 function openAddDialog() {
-  editForm.value = { user_id: '', type: 'income', amount: '', title: '', description: '', status: 1 }
+  editForm.value = { id: '', user_id: '', type: 'income', amount: '', title: '', description: '', status: 1 }
+  isEdit.value = false
+  dialogVisible.value = true
+}
+
+function openEditDialog(record) {
+  editForm.value = {
+    id: record.id,
+    user_id: record.user_id,
+    type: record.type,
+    amount: record.amount,
+    title: record.title || '',
+    description: record.description || '',
+    status: record.status
+  }
+  isEdit.value = true
   dialogVisible.value = true
 }
 
 async function saveRecord() {
-  const res = await api.financial.create(editForm.value)
-  if (res.code === 200) { ElMessage.success('创建成功'); dialogVisible.value = false; loadRecords(); loadStatistics() }
+  let res
+  if (isEdit.value) {
+    res = await api.financial.update(editForm.value.id, editForm.value)
+  } else {
+    res = await api.financial.create(editForm.value)
+  }
+  if (res.code === 200) { ElMessage.success(isEdit.value ? '更新成功' : '创建成功'); dialogVisible.value = false; loadRecords(); loadStatistics() }
   else { ElMessage.error(res.message) }
 }
 </script>
@@ -102,6 +123,16 @@ async function saveRecord() {
           </template>
         </ElTableColumn>
         <ElTableColumn prop="created_at" label="时间" min-width="170" />
+        <ElTableColumn label="操作" width="80" fixed="right">
+          <template #default="scope">
+            <ElButton
+              link
+              type="primary"
+              size="small"
+              @click="openEditDialog(scope.row)"
+            >编辑</ElButton>
+          </template>
+        </ElTableColumn>
       </ElTable>
 
       <div class="pagination-wrap">
@@ -118,7 +149,7 @@ async function saveRecord() {
 
     <ElDialog
       :visible="dialogVisible"
-      title="新增财务记录"
+      :title="editForm.id ? '编辑财务记录' : '新增财务记录'"
       width="480px"
       @close="dialogVisible = false"
     >

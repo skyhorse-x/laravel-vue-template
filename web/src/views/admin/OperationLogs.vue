@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import api from '@/api'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage, ElMessageBox, ElSelect, ElOption as ElSelectOption } from 'element-plus'
 
 const logs = ref([])
 const total = ref(0)

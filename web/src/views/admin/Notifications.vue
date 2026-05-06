@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import api from '@/api'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage, ElMessageBox, ElSelect, ElOption as ElSelectOption } from 'element-plus'
 
 const notifications = ref([])
 const total = ref(0)
@@ -9,7 +9,8 @@ const page = ref(1)
 const perPage = 20
 const loading = ref(false)
 const dialogVisible = ref(false)
-const sendForm = ref({ type: 'system', title: '', content: '', link: '', user_ids: [] })
+const isEdit = ref(false)
+const sendForm = ref({ id: '', type: 'system', title: '', content: '', link: '', user_ids: [] })
 const users = ref([])
 const searchForm = ref({ type: '', keyword: '', user_id: '' })
 
@@ -46,7 +47,21 @@ async function openSendDialog() {
   if (res.code === 200) {
     users.value = res.data.data
   }
-  sendForm.value = { type: 'system', title: '', content: '', link: '', user_ids: [] }
+  sendForm.value = { id: '', type: 'system', title: '', content: '', link: '', user_ids: [] }
+  isEdit.value = false
+  dialogVisible.value = true
+}
+
+function openEditDialog(notification) {
+  sendForm.value = {
+    id: notification.id,
+    type: notification.type,
+    title: notification.title,
+    content: notification.content,
+    link: notification.link || '',
+    user_ids: notification.user_id ? [notification.user_id] : []
+  }
+  isEdit.value = true
   dialogVisible.value = true
 }
 
@@ -55,13 +70,18 @@ async function sendNotification() {
     ElMessage.warning('请输入通知标题')
     return
   }
-  const res = await api.admin.notifications.create(sendForm.value)
+  let res
+  if (isEdit.value) {
+    res = await api.admin.notifications.update(sendForm.value.id, sendForm.value)
+  } else {
+    res = await api.admin.notifications.create(sendForm.value)
+  }
   if (res.code === 200) {
-    ElMessage.success('发送成功')
+    ElMessage.success(isEdit.value ? '更新成功' : '发送成功')
     dialogVisible.value = false
     loadData()
   } else {
-    ElMessage.error(res.message || '发送失败')
+    ElMessage.error(res.message || '操作失败')
   }
 }
 
@@ -203,16 +223,20 @@ function getTypeTagClass(type) {
             {{ formatDate(scope.row.created_at) }}
           </template>
         </ElTableColumn>
-        <ElTableColumn label="操作" width="80" fixed="right">
+        <ElTableColumn label="操作" width="120" fixed="right">
           <template #default="scope">
+            <ElButton
+              link
+              type="primary"
+              size="small"
+              @click="openEditDialog(scope.row)"
+            >编辑</ElButton>
             <ElButton
               link
               type="danger"
               size="small"
               @click="deleteNotification(scope.row.id)"
-            >
-              删除
-            </ElButton>
+            >删除</ElButton>
           </template>
         </ElTableColumn>
       </ElTable>
@@ -228,7 +252,7 @@ function getTypeTagClass(type) {
       </div>
     </div>
 
-    <ElDialog v-model="dialogVisible" title="发送通知" width="500px">
+    <ElDialog v-model="dialogVisible" :title="isEdit ? '编辑通知' : '发送通知'" width="500px">
       <ElForm :model="sendForm" label-width="80px">
         <ElFormItem label="通知类型">
           <ElSelect v-model="sendForm.type" style="width: 100%;">

@@ -40,6 +40,7 @@ class MenuSeeder extends Seeder
             ['id' => 46, 'name' => '操作日志', 'route' => '/admin/operation-logs', 'icon' => '', 'parent_id' => 4, 'sort' => 6, 'status' => 1, 'module' => 'log'],
             ['id' => 47, 'name' => 'IP黑名单', 'route' => '/admin/ip-blacklist', 'icon' => '', 'parent_id' => 4, 'sort' => 7, 'status' => 1, 'module' => 'security'],
             ['id' => 48, 'name' => '通知模板', 'route' => '/admin/notification-templates', 'icon' => '', 'parent_id' => 4, 'sort' => 8, 'status' => 1, 'module' => 'notification'],
+            ['id' => 49, 'name' => 'API管理', 'route' => '/admin/api-manager', 'icon' => 'Api', 'parent_id' => 4, 'sort' => 9, 'status' => 1, 'module' => 'developer'],
         ];
 
         foreach ($menus as $menu) {

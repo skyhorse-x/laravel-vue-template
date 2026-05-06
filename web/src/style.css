@@ -123,7 +123,7 @@ a:hover {
 
 /* 页面容器 */
 .page-container {
-  max-width: 1200px;
+  width: auto;
   margin: 0 auto;
   padding: var(--spacing-lg);
 }

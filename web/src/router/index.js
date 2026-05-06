@@ -83,6 +83,7 @@ const routes = [
       { path: 'products', name: 'AdminProducts', component: () => import('@/views/admin/Products.vue') },
       { path: 'notification-templates', name: 'AdminNotificationTemplates', component: () => import('@/views/admin/NotificationTemplates.vue') },
       { path: 'profile', name: 'AdminProfile', component: () => import('@/views/admin/Profile.vue') },
+      { path: 'api-manager', name: 'AdminApiManager', component: () => import('@/views/admin/ApiManager.vue') },
     ]
   }
 ]
